@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+
+<body class="text-center">
+  <form class="form-signin" method="POST" enctype="multipart/form-data">
+    <h1 align="center">Add Data</h1></p>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1">First Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="firstName"
+        name="firstName"
+        placeholder="Aysha"
+        required
+      />
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Last Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="lastName"
+        name="lastName"
+        placeholder="Abbas"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  
+  </form>
+
+  {% endblock %}
+</body>

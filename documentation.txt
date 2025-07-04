@@ -1,0 +1,140 @@
+Flask Template -
+Simpler than Django, preferred for smaller projects
+Template only shows how to:
+1. Get a basic web-page running 
+2. Connect to a database
+3. Use HTTP methods to retrieve inputs from the webpage
+4. Write to the database
+5. Display the database on the webpage
+
+Prerequisites -
+Install Python and PIP 
+(using pip3 for python3)
+
+1. Set up a virtual environment:
+    pip3 install virtualenv
+2. Create the environment where 'env' is the environment name:
+    virtualenv env
+3. Activate the environment:
+    source env/bin/activate
+4. Install flask:
+    pip3 install flask flask-sqlalchemy
+
+
+Getting started -
+
+1. Create a file called app.py to define functions and routes for the application.
+    Use the app.py contents for a basic page
+2. To run the application:
+    python3 app.py
+3. For static content:
+    a. Create a 'static' folder for css/js files
+    b. Create a 'templates' folder for html files
+        i. Add "from Flask import render_template" to app.py
+4. For databases:
+SQLite and MySQL can be used but sqlalchemy is recommended.
+To create the database after setting it up (see app.py):
+>Enter virtualenv
+>'python3'
+>'from app import db'
+>'db.create_all()'
+>'exit()'
+
+Try the following solutions if you recieve the error:
+"RuntimeError: Working outside of application context."
+
+Solution 1 -
+You can call the db.create_all() method within your code after defining the variable db = SQLAlchemy(app) and creating your model class:
+
+with app.app_context():
+    db.create_all()
+
+Solution 2 -
+'python3'
+'from app import app, db'
+'ctx = app.app_context()'
+'ctx.push()'
+'db.create_all()'
+
+Resource -
+https://stackoverflow.com/questions/73961938/flask-sqlalchemy-db-create-all-raises-runtimeerror-working-outside-of-applicat
+
+
+Add Data and Display Data -
+
+1. Add to the database (Using POST)
+2. Display the database  
+
+
+1. Add to the database
+    How to retrieve input fields from the web server:
+    1. HTML file -
+    In your input tag, define a name="" which can be used to access the HTML input field from the app.py file:
+    <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          required
+        />
+    2. App.py file -
+    Using the POST method in your function, store the input value to a variable following the example below:
+    def index():
+        if request.method=="POST":
+            firstName = request.form['firstName']
+            lastName = request.form['lastName']
+            print(firstName, lastName)
+        return render_template('index.html')
+
+    Write to the database -
+    Where 'Example' is your table name
+    new_record = Example(firstName=firstName, lastName=lastName)
+        try:
+            db.session.add(new_record)
+            db.session.commit()
+            return redirect('/index')
+        except:
+            return redirect('There was an error.')
+
+2. Display the database
+    Create a new web page.
+
+    1. App.py -
+
+        Retrieve all rows from the database:
+        def display_data():
+            records_list = []
+            records = Example.query.all()
+            for record in records:
+                firstName = record.firstName
+                lastName = record.lastName
+                a_record = firstName, lastName
+                records_list.append(a_record)
+                print('This is the record list', records_list)
+            return render_template('display_data.html', records_list=records_list)
+
+    2. HTML File -
+
+        Create a table and pass in the records_list variable through a loop:
+
+        <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for firstName, lastName in records_list %}   
+                    <tr>
+                        <td>{{firstName}}</td>
+                        <td>{{lastName}}</td>
+                    </tr>   
+                    {% endfor %}    
+                </tbody>
+            </table>
+    
+
+
+....
+
+    
