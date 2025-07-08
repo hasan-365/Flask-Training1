@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, current_app, redirect
 from flask import request, Request
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 #url_for is for creating urls
