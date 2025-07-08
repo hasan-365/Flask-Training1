@@ -22,10 +22,14 @@ class Example(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     firstName = db.Column(db.String(200))
     lastName = db.Column(db.String(200))
+    occupation = db.Column(db.String(200))
+    company = db.Column(db.String(200))
 
-    def __init__(self, firstName, lastName):
+    def __init__(self, firstName, lastName, occupation, company):
         self.firstName = firstName
         self.lastName = lastName
+        self.occupation = occupation
+        self.company = company
 
     #function to return something once a record is created
     def __repr__(self):
@@ -45,9 +49,11 @@ def index():
     if request.method=="POST":
         firstName = request.form['firstName']
         lastName = request.form['lastName']
-        print(firstName, lastName)
+        occupation = request.form['occupation']
+        company = request.form['company']
+        print(firstName, lastName, occupation)
         #Writing to the database
-        new_record = Example(firstName=firstName, lastName=lastName)
+        new_record = Example(firstName=firstName, lastName=lastName, occupation=occupation, company=company)
         try:
             db.session.add(new_record)
             db.session.commit()
@@ -68,7 +74,9 @@ def display_data():
     for record in records:
         firstName = record.firstName
         lastName = record.lastName
-        a_record = firstName, lastName
+        occupation = record.occupation
+        company = record.company
+        a_record = firstName, lastName, occupation, company
         records_list.append(a_record)
     print('This is the record list', records_list)
     #return records_list so it can be used in the HTML file

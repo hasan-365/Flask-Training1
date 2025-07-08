@@ -13,7 +13,7 @@
 </head>
   <body>
     <div class="container"><p></p>
-      <h1 align="center">Display Database</h1></p>
+      <h1 align="center"> Display Database </h1></p>
         <div class="table-wrapper">
             
             <table id="myTable" class="table table-bordered">
@@ -21,13 +21,17 @@
                     <tr>
                         <th>First Name</th>
                         <th>Last Name</th>
+                        <th>occupation</th>
+                        <th>company</th>
                     </tr>
                 </thead>
                 <tbody>
-                  {% for firstName, lastName in records_list %}   
+                  {% for firstName, lastName, occupation, company in records_list %}   
                     <tr>
                         <td>{{firstName}}</td>
                         <td>{{lastName}}</td>
+                        <td>{{occupation}}</td>
+                        <td>{{company}}</td>
                     </tr>   
                     {% endfor %}    
                 </tbody>
