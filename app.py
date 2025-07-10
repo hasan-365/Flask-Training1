@@ -1,7 +1,7 @@
 from flask import Flask, render_template, url_for, current_app, redirect
 from flask import request, Request
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
+from flask_migrate import Migrate #### this line
 
 
 #url_for is for creating urls
@@ -13,6 +13,8 @@ app = Flask(__name__)
 db_name = 'example.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+#######this line
+migrate = Migrate(app, db)
 
 #Initialize database
 db = SQLAlchemy(app)
